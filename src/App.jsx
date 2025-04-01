@@ -3,15 +3,10 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './App.scss'
-import { Button } from '@mui/material';
-
+import MyRoutes from './router/MyRoutes';
 function App() {
-
   return (
-    <>
-      welcome to netflix app
-
-    </>
+    <MyRoutes />
   )
 }
 
