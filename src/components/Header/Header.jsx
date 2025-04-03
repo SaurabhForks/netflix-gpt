@@ -13,12 +13,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Logo } from "../../assets/images/images";
+import { useNavigate } from "react-router";
+import { signOut } from "firebase/auth";
+import { auth } from "../../utils/firebase";
+import { useSelector } from 'react-redux'
 const Header = () => {
   const pages = ['Products', 'Pricing', 'Blog'];
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.userData)
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -33,15 +38,27 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleSettingsClick = (setting) => {
+    if (setting === 'Logout') {
+      signOut(auth).then(() => {
+        navigate(`/login`)
+      }).catch((err) => console.log(err))
+    }
+    else
+      navigate(`/${setting.toLowerCase()}`)
+  }
+
 
   return <div className={classes.header}>
     <AppBar position="static" className={classes.navWrap}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} className={'cursor-pointer'} onClick={() => {
+            if (user?.uid) return (navigate('/'))
+          }}>
             <img src={Logo} className={classes.logo} />
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {user?.uid && <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -74,12 +91,12 @@ const Header = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box>}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, }} >
+          {<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, }} >
             <img src={Logo} className={classes.logo} />
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          </Box>}
+          {user?.uid && <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -89,11 +106,11 @@ const Header = () => {
                 {page}
               </Button>
             ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
+          </Box>}
+          {user?.uid && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <span className={classes.avatar}>{user?.displayName?.split("")[0]}</span>
               </IconButton>
             </Tooltip>
             <Menu
@@ -113,12 +130,12 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                <MenuItem key={setting} onClick={handleCloseUserMenu} >
+                  <Typography sx={{ textAlign: 'center' }} onClick={() => handleSettingsClick(setting)}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box>}
         </Toolbar>
       </Container>
     </AppBar>

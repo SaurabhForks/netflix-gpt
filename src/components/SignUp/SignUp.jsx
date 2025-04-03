@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router";
 import { isNameValid, isPasswordValid, isValidEmail } from "../../utils/validations/validation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../utils/firebase"
-
+import { useDispatch } from "react-redux"
+import { addUser } from "../../redux/slices/userSlice";
 const SignUp = () => {
   const [userData, setUserData] = useState({
     name: "",
@@ -21,7 +22,7 @@ const SignUp = () => {
   })
   const [isDisabled, setIsDisabled] = useState(true)
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
   useEffect(() => {
     const hasErrors = Object.values(userDataError).some(
       (value) => value === true
@@ -81,9 +82,24 @@ const SignUp = () => {
         .then((userCredential) => {
           // Signed up 
           const user = userCredential.user;
+          console.log("user Signed up ", user);
           localStorage.setItem("userData", JSON.stringify(user))
-
           // ...
+        })
+        .then(() => {
+          updateProfile(auth.currentUser, {
+            displayName: userData.name
+          })
+            .then(() => {
+              const { uid, email, displayName } = auth.currentUser
+              dispatch(addUser({ uid: uid, email: email, displayName: displayName }))
+              navigate("/home")
+            }).catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.error(errorCode + "---" + errorMessage);
+            });
+
         })
         .catch((error) => {
           const errorCode = error.code;
