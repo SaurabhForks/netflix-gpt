@@ -7,8 +7,9 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const FIREBASE_KEY = import.meta.env.VITE_GOOGLE_FIREBASE_KEY;
 const firebaseConfig = {
-  apiKey: "AIzaSyCnvN6Bov_JmyWzPBdPjXm_UP0_lmTCls0",
+  apiKey: FIREBASE_KEY,
   authDomain: "neflix-gpt-cf24d.firebaseapp.com",
   projectId: "neflix-gpt-cf24d",
   storageBucket: "neflix-gpt-cf24d.firebasestorage.app",
