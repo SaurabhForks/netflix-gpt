@@ -82,7 +82,6 @@ const SignUp = () => {
         .then((userCredential) => {
           // Signed up 
           const user = userCredential.user;
-          console.log("user Signed up ", user);
           localStorage.setItem("userData", JSON.stringify(user))
           // ...
         })
@@ -93,7 +92,6 @@ const SignUp = () => {
             .then(() => {
               const { uid, email, displayName } = auth.currentUser
               dispatch(addUser({ uid: uid, email: email, displayName: displayName }))
-              navigate("/home")
             }).catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
