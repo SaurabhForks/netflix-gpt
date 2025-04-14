@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
         dispatch(setLoading(true))
@@ -34,6 +34,9 @@ function App() {
         // ...
       }
     });
+
+    return () => unsubscribe();
+
   }, []);
 
   return (
