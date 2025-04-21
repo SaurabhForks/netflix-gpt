@@ -20,7 +20,6 @@ const MainContainer = ({ movie }) => {
                 <div className="buttons flex justify-between">
                     <Button variant="contained" startIcon={<PlayArrowIcon />} className='mr-2'> Play</Button>
                     <Button variant="outlined" startIcon={<Info />}> More Info</Button>
-
                 </div>
             </div>
 

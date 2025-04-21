@@ -1,0 +1,14 @@
+.slider {
+  display: flex;
+  gap: 10px;
+  .movie-card {
+    min-width: calc(100% / 7 - 10px);
+    // max-width: 100%;
+  }
+}
+.slider-container {
+  overflow-x: scroll;
+}
+.movie-slider-row {
+  padding: 15px 0;
+}

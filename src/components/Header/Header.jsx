@@ -13,12 +13,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Logo } from "../../assets/images/images";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useSelector } from 'react-redux'
+import { PAGES } from "../../utils/constants";
 const Header = () => {
-  const pages = ['Products', 'Pricing', 'Blog'];
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -85,9 +85,10 @@ const Header = () => {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+              {PAGES.map((page) => (
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Link to={page.route}>
+                    <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography></Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -97,14 +98,18 @@ const Header = () => {
             <img src={Logo} className={classes.logo} />
           </Box>}
           {user?.uid && <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+            {PAGES.map((page) => (
+              <Link
+                to={page.route}
+                key={page.name}
               >
-                {page}
-              </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>}
           {user?.uid && <Box sx={{ flexGrow: 0 }}>

@@ -13,3 +13,12 @@ export const BASE_TMDB_URL =
 
 export const getMovieVideoUrl = (id) =>
   `https://api.themoviedb.org/3/movie/${id}/videos`;
+
+export const getMoviePostarUrl = (poster_path) =>
+  `https://image.tmdb.org/t/p/w500/${poster_path}`;
+
+export const PAGES = [
+  { name: "Home", route: "/" },
+  { name: "Gpt Search", route: "gpt-search" },
+  { name: "Blog", route: "blog" },
+];

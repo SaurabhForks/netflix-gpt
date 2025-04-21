@@ -18,7 +18,7 @@ const VideoPlayer = ({ video_id }) => {
     return (
         <div className='video-player'>
             <iframe
-                src={`https://www.youtube-nocookie.com/embed/${trailer?.key}?&autoplay=1&mute=1&controls=0&showinfo=0&rel=0?loop=1?playlist=${trailer?.key}`}
+                src={`https://www.youtube-nocookie.com/embed/${trailer?.key}?&autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${trailer?.key}`}
                 title={""}
                 allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture; web-share;"
                 referrerpolicy="strict-origin-when-cross-origin"

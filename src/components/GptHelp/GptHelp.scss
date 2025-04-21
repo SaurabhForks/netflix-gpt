@@ -1,0 +1,32 @@
+.gpt-help {
+  background-image: url("../../assets/images/login_bg.jpg");
+  padding: 100px 0 0;
+  min-height: 70vh;
+}
+.search-bar-wrap {
+  background-color: black;
+  border: red;
+  margin: 100px auto 0;
+  max-width: 500px;
+  align-items: center;
+  padding: 25px;
+  .button {
+    width: 50%;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .text-input {
+    width: 100%;
+    color: white;
+    outline: none;
+    padding: 12px;
+    &:focus {
+      background-color: rgba(254, 251, 251, 0.252);
+    }
+  }
+  form {
+    width: 100%;
+  }
+}
