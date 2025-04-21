@@ -17,6 +17,9 @@ export const getMovieVideoUrl = (id) =>
 export const getMoviePostarUrl = (poster_path) =>
   `https://image.tmdb.org/t/p/w500/${poster_path}`;
 
+export const getBaseSearchUrl = (movie) =>
+  `https://api.themoviedb.org/3/search/movie?query=${movie}`;
+
 export const PAGES = [
   { name: "Home", route: "/" },
   { name: "Gpt Search", route: "gpt-search" },
